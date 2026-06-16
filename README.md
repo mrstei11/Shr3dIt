@@ -1,0 +1,40 @@
+# SHR3D_IT
+
+Tactical fitness app — migrated from the original R Shiny mockup to **Next.js** for deployment on [Vercel](https://vercel.com).
+
+## Features
+
+- **Strength** — 12-week progressive program, stopwatch, muscle radar, workout checklist, exercise guides
+- **The Loadout** — build custom workouts from the exercise armory
+- **Intel Archive** — workout notes stored in Vercel Postgres
+- **Mind / Spirit** — Gemini AI via secure server-side API routes
+- **Fuel** — nutrition targets and example day
+
+## Local development
+
+```bash
+npm install
+cp .env.example .env.local
+# Add GEMINI_API_KEY and Postgres vars from Vercel dashboard
+npm run dev
+```
+
+Open [http://localhost:3000](http://localhost:3000).
+
+## Vercel deployment
+
+1. Push this repo to GitHub
+2. Import the project in Vercel
+3. Add **Vercel Postgres** (Storage → Create → Postgres) — `DATABASE_URL` is injected automatically
+4. Add `GEMINI_API_KEY` in Project Settings → Environment Variables
+5. Deploy
+
+The `notes` table is created automatically on first API call. You can also run `sql/schema.sql` manually in the Vercel Postgres SQL console.
+
+## Original Shiny app
+
+The R Shiny prototype is preserved in `shiny-reference/app.R` for reference.
+
+## Security
+
+Never commit API keys. Rotate your Gemini key if it was previously stored in source code.

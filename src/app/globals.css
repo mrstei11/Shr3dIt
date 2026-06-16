@@ -1,0 +1,64 @@
+@import "tailwindcss";
+
+@theme {
+  --font-mono: "Share Tech Mono", ui-monospace, monospace;
+  --color-neon: #39ff14;
+  --color-panel: #0a0a0a;
+  --color-surface: #111111;
+}
+
+body {
+  background-color: #050505;
+  color: #e0e0e0;
+  font-family: var(--font-mono);
+}
+
+.box {
+  background-color: var(--color-panel);
+  border: 1px solid #333;
+  box-shadow: 0 0 10px rgba(57, 255, 20, 0.1);
+}
+
+.box-header {
+  background-color: var(--color-surface);
+  color: var(--color-neon);
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid #333;
+  font-weight: 600;
+}
+
+.timer-btn {
+  background-color: #000;
+  border: 1px solid var(--color-neon);
+  color: var(--color-neon);
+  padding: 0.5rem 1rem;
+  margin: 0.25rem;
+  cursor: pointer;
+  transition: background-color 0.15s, color 0.15s;
+}
+
+.timer-btn:hover:not(:disabled) {
+  background-color: var(--color-neon);
+  color: #000;
+}
+
+.timer-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+input,
+textarea,
+select {
+  background-color: #000 !important;
+  border: 1px solid var(--color-neon) !important;
+  color: var(--color-neon) !important;
+}
+
+input[type="checkbox"] {
+  accent-color: var(--color-neon);
+}
+
+.tier-i { color: var(--color-neon); font-weight: bold; }
+.tier-ii { color: orange; font-weight: bold; }
+.tier-iii { color: red; font-weight: bold; }
