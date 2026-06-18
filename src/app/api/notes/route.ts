@@ -1,9 +1,15 @@
 import { NextResponse } from "next/server";
+import { auth } from "@/auth";
 import { createNote, getNotes } from "@/lib/db";
 
 export async function GET() {
+  const session = await auth();
+  if (!session?.user?.id) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
   try {
-    const notes = await getNotes();
+    const notes = await getNotes(Number(session.user.id));
     return NextResponse.json({ notes });
   } catch (error) {
     console.error("GET /api/notes", error);
@@ -15,6 +21,11 @@ export async function GET() {
 }
 
 export async function POST(request: Request) {
+  const session = await auth();
+  if (!session?.user?.id) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
   try {
     const body = await request.json();
     const week = Number(body.week);
@@ -28,7 +39,7 @@ export async function POST(request: Request) {
       );
     }
 
-    const saved = await createNote(week, day, note);
+    const saved = await createNote(Number(session.user.id), week, day, note);
     return NextResponse.json({ note: saved });
   } catch (error) {
     console.error("POST /api/notes", error);

@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Share_Tech_Mono } from "next/font/google";
+import { Providers } from "@/components/Providers";
 import "./globals.css";
 
 const shareTechMono = Share_Tech_Mono({
@@ -33,7 +34,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${shareTechMono.className} antialiased`}>
-        {children}
+        <Providers>{children}</Providers>
       </body>
     </html>
   );

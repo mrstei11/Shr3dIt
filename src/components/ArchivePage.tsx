@@ -19,7 +19,7 @@ export function ArchivePage() {
       const data = await res.json();
       setNotes(data.notes ?? []);
     } catch {
-      setError("Could not load archive. Ensure Vercel Postgres is configured.");
+      setError("Could not load archive. Sign in and ensure Postgres is configured.");
     } finally {
       setLoading(false);
     }

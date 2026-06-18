@@ -6,7 +6,7 @@ Tactical fitness app — migrated from the original R Shiny mockup to **Next.js*
 
 - **Strength** — 12-week progressive program, stopwatch, muscle radar, workout checklist, exercise guides
 - **The Loadout** — build custom workouts from the exercise armory
-- **Intel Archive** — workout notes stored in Vercel Postgres
+- **Intel Archive** — private workout notes per user (email/password login)
 - **Mind / Spirit** — Gemini AI via secure server-side API routes
 - **Fuel** — nutrition targets and example day
 
@@ -27,7 +27,8 @@ Open [http://localhost:3000](http://localhost:3000).
 2. Import the project in Vercel
 3. Add **Vercel Postgres** (Storage → Create → Postgres) — `DATABASE_URL` is injected automatically
 4. Add `GEMINI_API_KEY` in Project Settings → Environment Variables
-5. Deploy
+5. Add `AUTH_SECRET` — a random string (run `openssl rand -base64 32` locally)
+6. **Deployments → Redeploy** (so env vars apply)
 
 The `notes` table is created automatically on first API call. You can also run `sql/schema.sql` manually in the Vercel Postgres SQL console.
 
