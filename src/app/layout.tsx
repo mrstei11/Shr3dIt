@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Share_Tech_Mono } from "next/font/google";
 import "./globals.css";
 
@@ -11,6 +11,18 @@ const shareTechMono = Share_Tech_Mono({
 export const metadata: Metadata = {
   title: "SHR3D_IT",
   description: "Tactical fitness training system",
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "black-translucent",
+    title: "SHR3D_IT",
+  },
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+  themeColor: "#050505",
 };
 
 export default function RootLayout({

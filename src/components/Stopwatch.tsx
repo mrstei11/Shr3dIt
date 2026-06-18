@@ -25,24 +25,24 @@ export function Stopwatch() {
   return (
     <div
       id="stopwatch-container"
-      className="border-2 border-[#39ff14] bg-black p-5 text-center"
+      className="border-2 border-[#39ff14] bg-black p-4 sm:p-5 text-center"
     >
       <div
         id="timer-display"
-        className="text-6xl text-[#39ff14] drop-shadow-[0_0_10px_#39ff14]"
+        className="text-5xl sm:text-6xl text-[#39ff14] drop-shadow-[0_0_10px_#39ff14] tabular-nums"
       >
         {display}
       </div>
-      <div className="mt-4">
-        <button type="button" className="timer-btn" onClick={() => setRunning(true)}>
+      <div className="mt-4 flex flex-wrap justify-center gap-2">
+        <button type="button" className="timer-btn flex-1 min-w-[5.5rem] sm:flex-none" onClick={() => setRunning(true)}>
           INITIATE
         </button>
-        <button type="button" className="timer-btn" onClick={() => setRunning(false)}>
+        <button type="button" className="timer-btn flex-1 min-w-[5.5rem] sm:flex-none" onClick={() => setRunning(false)}>
           HALT
         </button>
         <button
           type="button"
-          className="timer-btn"
+          className="timer-btn flex-1 min-w-[5.5rem] sm:flex-none"
           onClick={() => {
             setRunning(false);
             setSeconds(0);

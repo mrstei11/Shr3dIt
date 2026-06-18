@@ -1,8 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { AppShell } from "./AppShell";
 import { Panel } from "./Panel";
-import { Sidebar } from "./Sidebar";
 
 export function GeminiPanel({
   title,
@@ -38,20 +38,19 @@ export function GeminiPanel({
   }, [prompt]);
 
   return (
-    <div className="flex min-h-screen">
-      <Sidebar />
-      <main className="flex-1 p-6">
-        <Panel title={title}>
-          {loading ? (
-            <p className="text-[#888] animate-pulse">Establishing uplink...</p>
-          ) : (
-            <div
-              className="text-lg leading-relaxed"
-              dangerouslySetInnerHTML={{ __html: html }}
-            />
-          )}
-        </Panel>
-      </main>
-    </div>
+    <AppShell>
+      <Panel title={title}>
+        {loading ? (
+          <p className="text-[#888] animate-pulse text-sm sm:text-base">
+            Establishing uplink...
+          </p>
+        ) : (
+          <div
+            className="text-base sm:text-lg leading-relaxed break-words"
+            dangerouslySetInnerHTML={{ __html: html }}
+          />
+        )}
+      </Panel>
+    </AppShell>
   );
 }

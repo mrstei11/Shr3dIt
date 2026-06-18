@@ -10,7 +10,7 @@ export function Panel({
   return (
     <div className={`box ${className}`}>
       <div className="box-header">{title}</div>
-      <div className="p-4">{children}</div>
+      <div className="p-3 sm:p-4">{children}</div>
     </div>
   );
 }

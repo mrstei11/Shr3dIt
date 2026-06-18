@@ -46,10 +46,10 @@ export function NoteForm({
         rows={3}
         className="w-full p-2"
       />
-      <div className="mt-3 flex items-center gap-4">
+      <div className="mt-3 flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-4">
         <button
           type="button"
-          className="timer-btn"
+          className="timer-btn w-full sm:w-auto"
           onClick={handleSave}
           disabled={saving || !note.trim()}
         >

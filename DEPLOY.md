@@ -4,9 +4,13 @@ Run these steps in PowerShell from the project folder.
 
 ## 1. GitHub — one-time login
 
+If `gh` is not recognized, use the full path (GitHub CLI is installed here):
+
 ```powershell
-gh auth login
+& "C:\Program Files\GitHub CLI\gh.exe" auth login
 ```
+
+Or **restart Cursor** / open a new terminal — that often picks up PATH after install.
 
 Choose:
 - **GitHub.com**
@@ -17,7 +21,13 @@ Choose:
 
 ```powershell
 cd "c:\Users\mrste\OneDrive\Shr3dIt"
-gh repo create Shr3dIt --public --source=. --remote=origin --push --description "Tactical fitness app (Next.js)"
+.\scripts\push-to-github.ps1
+```
+
+Or manually:
+
+```powershell
+& "C:\Program Files\GitHub CLI\gh.exe" repo create Shr3dIt --public --source=. --remote=origin --push --description "Tactical fitness app (Next.js)"
 ```
 
 If the repo name `Shr3dIt` is taken, pick another name and run:
