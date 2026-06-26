@@ -50,6 +50,11 @@ export async function sendPasswordResetEmail(
   if (!response.ok) {
     const body = await response.text();
     console.error("Resend error:", response.status, body);
+
+    if (response.status === 403 && body.includes("only send testing emails")) {
+      return { ok: false, error: "Resend sandbox restriction" };
+    }
+
     return { ok: false, error: "Failed to send email" };
   }
 

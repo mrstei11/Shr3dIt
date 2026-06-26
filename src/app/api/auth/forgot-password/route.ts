@@ -30,10 +30,14 @@ export async function POST(request: Request) {
     const sent = await sendPasswordResetEmail(result.email, resetUrl);
 
     if (!sent.ok) {
-      return NextResponse.json(
-        { error: "Could not send reset email. Try again later." },
-        { status: 503 }
-      );
+      const userMessage =
+        sent.error === "Email service not configured"
+          ? "Password reset email is not configured yet. Add RESEND_API_KEY in Vercel environment variables."
+          : sent.error === "Resend sandbox restriction"
+            ? "Reset emails can only be sent to your Resend account email until you verify a domain."
+            : "Could not send reset email. Try again later.";
+
+      return NextResponse.json({ error: userMessage }, { status: 503 });
     }
 
     return NextResponse.json({ message });
