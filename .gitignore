@@ -41,3 +41,5 @@ next-env.d.ts
 
 # shiny reference db
 *.sqlite
+
+.vercel

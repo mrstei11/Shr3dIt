@@ -76,6 +76,11 @@ export function LoginForm() {
           {loading ? "AUTHENTICATING..." : "INITIATE SESSION"}
         </button>
         <p className="text-sm text-[#888] text-center">
+          <Link href="/forgot-password" className="text-[#39ff14] hover:underline">
+            Forgot password?
+          </Link>
+        </p>
+        <p className="text-sm text-[#888] text-center">
           No account?{" "}
           <Link href="/register" className="text-[#39ff14] hover:underline">
             Register

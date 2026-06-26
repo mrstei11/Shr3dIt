@@ -28,7 +28,9 @@ Open [http://localhost:3000](http://localhost:3000).
 3. Add **Vercel Postgres** (Storage → Create → Postgres) — `DATABASE_URL` is injected automatically
 4. Add `GEMINI_API_KEY` in Project Settings → Environment Variables
 5. Add `AUTH_SECRET` — a random string (run `openssl rand -base64 32` locally)
-6. **Deployments → Redeploy** (so env vars apply)
+6. Add `RESEND_API_KEY` from [resend.com](https://resend.com) for password reset emails
+7. Add `NEXT_PUBLIC_APP_URL` = `https://shr3d-it.vercel.app` (your production URL)
+8. **Deployments → Redeploy** (so env vars apply)
 
 The `notes` table is created automatically on first API call. You can also run `sql/schema.sql` manually in the Vercel Postgres SQL console.
 
