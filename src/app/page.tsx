@@ -1,5 +1,9 @@
 import { redirect } from "next/navigation";
+import { auth } from "@/auth";
+import { LandingPage } from "@/components/LandingPage";
 
-export default function Home() {
-  redirect("/strength");
+export default async function Home() {
+  const session = await auth();
+  if (session?.user) redirect("/strength");
+  return <LandingPage />;
 }

@@ -1,7 +1,5 @@
 "use client";
 
-import Link from "next/link";
-import { useSession } from "next-auth/react";
 import { useState } from "react";
 import { Panel } from "./Panel";
 
@@ -14,40 +12,10 @@ export function NoteForm({
   day: string;
   onSaved?: () => void;
 }) {
-  const { data: session, status } = useSession();
   const [note, setNote] = useState("");
   const [formError, setFormError] = useState<string | null>(null);
   const [statusMsg, setStatusMsg] = useState<string | null>(null);
   const [saving, setSaving] = useState(false);
-
-  if (status === "loading") {
-    return (
-      <Panel title="COMMS_LOG (ADD NOTE)">
-        <p className="text-[#888] text-sm animate-pulse">Checking auth...</p>
-      </Panel>
-    );
-  }
-
-  if (!session?.user) {
-    return (
-      <Panel title="COMMS_LOG (ADD NOTE)">
-        <p className="text-sm text-[#888] mb-4">
-          Sign in to save notes to your private intel archive.
-        </p>
-        <div className="flex flex-col sm:flex-row gap-2">
-          <Link href="/login" className="timer-btn text-center !m-0">
-            OPERATOR LOGIN
-          </Link>
-          <Link
-            href="/register"
-            className="timer-btn text-center !m-0 border-[#888] text-[#888]"
-          >
-            CREATE ACCOUNT
-          </Link>
-        </div>
-      </Panel>
-    );
-  }
 
   async function handleSave() {
     if (!note.trim()) return;
