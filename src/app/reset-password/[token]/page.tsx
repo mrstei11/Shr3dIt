@@ -1,21 +1,17 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { Suspense } from "react";
 import { auth } from "@/auth";
 import { ResetPasswordForm } from "@/components/ResetPasswordForm";
 
-export default async function ResetPasswordPage({
-  searchParams,
+export default async function ResetPasswordTokenPage({
+  params,
 }: {
-  searchParams: Promise<{ token?: string }>;
+  params: Promise<{ token: string }>;
 }) {
   const session = await auth();
   if (session?.user) redirect("/strength");
 
-  const { token } = await searchParams;
-  if (token) {
-    redirect(`/reset-password/${token}`);
-  }
+  const { token } = await params;
 
   return (
     <div className="min-h-dvh flex flex-col items-center justify-center p-4 safe-top safe-bottom">
@@ -25,9 +21,7 @@ export default async function ResetPasswordPage({
       >
         SHR3D_IT
       </Link>
-      <Suspense fallback={<p className="text-[#888]">Loading...</p>}>
-        <ResetPasswordForm />
-      </Suspense>
+      <ResetPasswordForm token={token} />
     </div>
   );
 }

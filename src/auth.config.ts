@@ -14,9 +14,9 @@ export const authConfig = {
       const path = nextUrl.pathname;
 
       if (PUBLIC_PATHS.includes(path)) return true;
-      if (path.startsWith("/api/auth") || path.startsWith("/api/register")) {
-        return true;
-      }
+      if (path.startsWith("/reset-password/")) return true;
+      if (path.startsWith("/api/auth")) return true;
+      if (path.startsWith("/api/register")) return true;
       if (path.startsWith("/api/")) {
         return !!auth?.user;
       }

@@ -4,9 +4,10 @@ import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useState } from "react";
 
-export function ResetPasswordForm() {
+export function ResetPasswordForm({ token: tokenProp }: { token?: string }) {
   const searchParams = useSearchParams();
-  const token = searchParams.get("token") ?? "";
+  const tokenFromQuery = searchParams.get("token") ?? "";
+  const token = tokenProp ?? tokenFromQuery;
 
   const [password, setPassword] = useState("");
   const [confirm, setConfirm] = useState("");

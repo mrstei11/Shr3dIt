@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { getAppUrl, sendPasswordResetEmail } from "@/lib/email";
+import { buildPasswordResetUrl, sendPasswordResetEmail } from "@/lib/email";
 import { createPasswordResetToken } from "@/lib/password-reset";
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -26,7 +26,8 @@ export async function POST(request: Request) {
       return NextResponse.json({ message });
     }
 
-    const resetUrl = `${getAppUrl()}/reset-password?token=${result.token}`;
+    const resetUrl = buildPasswordResetUrl(result.token);
+    console.info("Password reset link generated for", result.email, resetUrl);
     const sent = await sendPasswordResetEmail(result.email, resetUrl);
 
     if (!sent.ok) {

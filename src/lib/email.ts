@@ -1,41 +1,26 @@
-const PRODUCTION_FALLBACK = "https://shr3d-it.vercel.app";
-
-function normalizeUrl(raw: string): string | null {
-  const trimmed = raw.trim();
-  if (!trimmed) return null;
-
-  if (trimmed.startsWith("http://") || trimmed.startsWith("https://")) {
-    return trimmed.replace(/\/$/, "");
+/** Production URL for password reset emails — always use the stable alias. */
+export function getPasswordResetBaseUrl(): string {
+  const configured = process.env.APP_URL?.trim() || process.env.NEXT_PUBLIC_APP_URL?.trim();
+  if (configured) {
+    if (configured.startsWith("http://") || configured.startsWith("https://")) {
+      return configured.replace(/\/$/, "");
+    }
+    return `https://${configured.replace(/\/$/, "")}`;
   }
-
-  return `https://${trimmed.replace(/\/$/, "")}`;
+  return "https://shr3d-it.vercel.app";
 }
 
-export function getAppUrl(): string {
-  const candidates = [
-    process.env.NEXT_PUBLIC_APP_URL,
-    process.env.VERCEL_PROJECT_PRODUCTION_URL
-      ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
-      : undefined,
-    process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : undefined,
-  ];
-
-  for (const candidate of candidates) {
-    if (!candidate) continue;
-    const normalized = normalizeUrl(candidate);
-    if (normalized) return normalized;
-  }
-
-  return PRODUCTION_FALLBACK;
+export function buildPasswordResetUrl(token: string): string {
+  return `${getPasswordResetBaseUrl()}/reset-password/${token}`;
 }
 
 export async function sendPasswordResetEmail(
   email: string,
   resetUrl: string
 ): Promise<{ ok: boolean; error?: string }> {
-  const apiKey = process.env.RESEND_API_KEY;
+  const apiKey = process.env.RESEND_API_KEY?.trim();
   const from =
-    process.env.EMAIL_FROM ?? "SHR3D_IT <onboarding@resend.dev>";
+    process.env.EMAIL_FROM?.trim() || "SHR3D_IT <onboarding@resend.dev>";
 
   if (!apiKey) {
     console.error("RESEND_API_KEY is not configured");
@@ -52,6 +37,7 @@ export async function sendPasswordResetEmail(
       from,
       to: email,
       subject: "SHR3D_IT — Reset your password",
+      text: `Reset your SHR3D_IT password:\n\n${resetUrl}\n\nThis link expires in 1 hour. If you did not request this, ignore this email.`,
       html: `
         <div style="font-family: monospace; background:#050505; color:#e0e0e0; padding:24px;">
           <h1 style="color:#39ff14; margin:0 0 16px;">SHR3D_IT</h1>
