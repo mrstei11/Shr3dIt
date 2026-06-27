@@ -1,11 +1,32 @@
-export function getAppUrl() {
-  if (process.env.NEXT_PUBLIC_APP_URL) {
-    return process.env.NEXT_PUBLIC_APP_URL.replace(/\/$/, "");
+const PRODUCTION_FALLBACK = "https://shr3d-it.vercel.app";
+
+function normalizeUrl(raw: string): string | null {
+  const trimmed = raw.trim();
+  if (!trimmed) return null;
+
+  if (trimmed.startsWith("http://") || trimmed.startsWith("https://")) {
+    return trimmed.replace(/\/$/, "");
   }
-  if (process.env.VERCEL_URL) {
-    return `https://${process.env.VERCEL_URL}`;
+
+  return `https://${trimmed.replace(/\/$/, "")}`;
+}
+
+export function getAppUrl(): string {
+  const candidates = [
+    process.env.NEXT_PUBLIC_APP_URL,
+    process.env.VERCEL_PROJECT_PRODUCTION_URL
+      ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+      : undefined,
+    process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : undefined,
+  ];
+
+  for (const candidate of candidates) {
+    if (!candidate) continue;
+    const normalized = normalizeUrl(candidate);
+    if (normalized) return normalized;
   }
-  return "http://localhost:3000";
+
+  return PRODUCTION_FALLBACK;
 }
 
 export async function sendPasswordResetEmail(
@@ -41,6 +62,8 @@ export async function sendPasswordResetEmail(
               RESET PASSWORD
             </a>
           </p>
+          <p style="color:#888; font-size:12px;">Or copy this link into your browser:</p>
+          <p style="color:#39ff14; font-size:12px; word-break:break-all;">${resetUrl}</p>
           <p style="color:#888; font-size:12px;">If you did not request this, ignore this email.</p>
         </div>
       `,
